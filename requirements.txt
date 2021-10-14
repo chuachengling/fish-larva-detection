@@ -2,5 +2,4 @@ streamlit
 numpy
 opencv-python
 pillow
-glob
 pandas
