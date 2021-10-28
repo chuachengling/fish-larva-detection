@@ -1,5 +1,4 @@
-from utils import *
-from config import * 
+from backend.utils import *
 
 import math
 import pandas as pd
@@ -10,7 +9,7 @@ def load_model():
     model = torch.hub.load('ultralytics/yolov5', 'custom', force_reload = True , path = 'weights/yolov5.pt').autoshape()
     return model
 
-def inference(im,,model ,SLICE_SIZE=640):
+def inference(im,model ,SLICE_SIZE=640):
     ## Get your max width and height
     height = im.shape[0]
     width = im.shape[1]

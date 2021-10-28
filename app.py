@@ -5,11 +5,15 @@ import base64
 import io
 import os 
 
-from backend.inference import load_model, inference, draw_bboxes
-
+from backend.inference import *
+import backend.config as config
 model = load_model()
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def index():
+    return 'Machine Learning Inference'
+    
 @app.route('/api/',methods =  ['POST'])
 def main():
     response = request.get_json()
@@ -27,7 +31,7 @@ def main():
 
     results = inference(img_arr,model)
     print(results)
-    img_with_bbox = draw_bboxes(img_arr,results)
+    img_with_bbox = draw_bboxes(img_arr,config.CLASSES,config.COLORS,results)
 
     ## convert labels and image here 
     return results,img_with_bbox
