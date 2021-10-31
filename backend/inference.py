@@ -5,11 +5,7 @@ import pandas as pd
 import numpy as np
 import torch
 
-def load_model():
-    model = torch.hub.load('ultralytics/yolov5', 'custom', force_reload = True , path = 'weights/yolov5.pt').autoshape()
-    return model
-
-def inference(im,model ,SLICE_SIZE=640):
+def inference(im,SLICE_SIZE=640):
     ## Get your max width and height
     height = im.shape[0]
     width = im.shape[1]
@@ -19,20 +15,25 @@ def inference(im,model ,SLICE_SIZE=640):
     slice_size_w = int(width/dim_w)
 
     labels=[]
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path = 'weights/yolov5.pt').autoshape() ## put force_reload=True to redownload.
 
     for i in range(dim_h):
         for j in range(dim_w):
 
             sliced = im[i*slice_size_h:(i+1)*slice_size_h, j*slice_size_w:(j+1)*slice_size_w]
-            res = model(sliced)
 
+            res = model(sliced)
+            
             output = res.pandas().xywh[0]
             
-            output['width'] = output['width']/width
+            output['width'] = output['width']/width 
             output['height'] = output['height']/height
 
             output['xcenter'] = (j * slice_size_w + output['xcenter'] )/width
             output['ycenter'] = (i * slice_size_h + output['ycenter'] )/height
+
+            labels.append(output)
+
     
     merged = pd.concat(labels)
 
@@ -61,5 +62,22 @@ def draw_bboxes(img,classes,colours,labels):
         plot_one_box([x1,y1,x2,y2], im2, color=colours[class_idx], label=classes[class_idx], line_thickness=None)
 
     return im2
+
+def transform_results(results):
+    results_list = []
+    for index,row in results.iterrows():
+        bbox = row[['xcenter','ycenter','width','height']].tolist()
+        predicted_class = row['class']
+        class_name = row['name']
+        confidence = row['confidence']
+        output_dict = {
+            "predicted_class":predicted_class,
+            "class_name":class_name,
+            "confidence":confidence,
+            "bounding_box":bbox
+            }
+        results_list.append(output_dict)
+    return results_list
+
 
 
