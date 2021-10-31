@@ -20,7 +20,7 @@ def index():
 def main():
     response = request.get_json()
     filename = response['filename']
-    data_str = response['image']
+    data_str = response['image_base64']
     image = base64.b64decode(data_str)
 
     jpg_as_np = np.frombuffer(image, dtype=np.uint8)
