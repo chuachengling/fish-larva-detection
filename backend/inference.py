@@ -1,4 +1,4 @@
-from backend.utils import *
+from utils import *
 
 import math
 import pandas as pd
