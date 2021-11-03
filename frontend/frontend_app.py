@@ -1,5 +1,6 @@
 import streamlit as st 
 from utils import *
+from collections import Counter
 import glob
 import cv2
 import pandas as pd
@@ -16,6 +17,19 @@ import base64
 import requests
 import json
 
+st.markdown(
+    """
+    <style>
+    .reportview-container {
+        background: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366")
+    }
+   .sidebar .sidebar-content {
+        background: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366")
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 ## Choose weights/model -- yolov5
@@ -48,10 +62,39 @@ def predict(url, file):
     response = requests.post(url, json=json.dumps(data))#, header=header)
     return response ##json format
 
+def rename_class(row):
+    if row['class'] == 0:
+      return 'fertilized egg'
+    if row['class'] == 1:
+      return 'unfertilized egg'
+    if row['class'] == 2:
+      return 'fish larva'
+    if row['class'] == 3:
+      return 'unidentifiable object'
+
 if file:
     response = predict('http://0.0.0.0:5000/api/',file)
-    print('received json')
+    print('JSON file has been received')
     st.write(json.loads(response.text))
+
+
+    #Showcase Inferenced Image
+    st.write('### Inferenced Image')
+
+    list_new = []
+    for i in response:
+        list_new.append(i["category_name"])
+
+    count_model = Counter(list_new)
+    
+    #Create DF
+    df = pd.DataFrame.from_dict(count_model, orient='index').reset_index()
+    df = df.rename(columns={"index": "class", 0: "model_count"})
+    st.dataframe(df)
+
+
+
+
 
 ##take out image and bounding boxes and run the counter --> display counter table
 ##implement download button to download json file
