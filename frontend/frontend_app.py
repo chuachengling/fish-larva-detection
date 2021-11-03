@@ -18,6 +18,10 @@ import base64
 import requests
 import json
 
+def data_uri_to_cv2_img(uri):
+    io_obj= np.fromstring(base64.b64decode(uri), np.uint8)
+    return io_obj
+    
 st.markdown(
     """
     <style>
@@ -75,21 +79,26 @@ def rename_class(row):
       return 'unidentifiable object'
 
 if file:
-    response = predict('http://0.0.0.0:5000/api/',file)
+    response = predict('http://0.0.0.0:80/api/',file)
     print('JSON file has been received')
-    st.write(json.loads(response.text))
 
+    response = json.loads(response.text)
 
     #Showcase Inferenced Image
     st.write('### Inferenced Image')
 
+    img = data_uri_to_cv2_img(response['image_base64'])
+    st.image(img)
+
     ##code to display inferenced image here
     
     #Create DF to showcase class counts
+    filename = response['filename'][:-4]
 
     list_new = []
-    for i in response:
-        list_new.append(i["category_name"])
+    predictions = response['predictions']
+    for i in predictions:
+        list_new.append(i["class_name"])
 
     count_model = Counter(list_new)
     df = pd.DataFrame.from_dict(count_model, orient='index').reset_index()
@@ -111,7 +120,8 @@ if file:
     st.pyplot(fig)
 
     # Download JSON
-    st.download_button(label='Download JSON', data=response)
+
+    st.download_button(label='Download JSON', data=json.dumps(response),file_name = f'{filename}.json')
 
 
 

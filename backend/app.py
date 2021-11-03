@@ -21,7 +21,7 @@ def index():
 def main():
     response = request.get_json()
 
-    #response = json.loads(response)
+    response = json.loads(response)
 
     filename = response['filename']
     data_str = response['image_base64']
@@ -30,7 +30,9 @@ def main():
     jpg_as_np = np.frombuffer(image, dtype=np.uint8)
     img = cv2.imdecode(jpg_as_np, flags=1)
 
-    results = inference(img,640)
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path = '../weights/yolov5.pt',force_reload=True).autoshape() ## put force_reload=True to redownload.
+
+    results = inference(img,model,640)
 
     img_with_bbox = draw_bboxes(img,config.CLASSES,config.COLORS,results)
 

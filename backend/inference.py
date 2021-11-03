@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import torch
 
-def inference(im,SLICE_SIZE=640):
+def inference(im,model,SLICE_SIZE=640):
     ## Get your max width and height
     height = im.shape[0]
     width = im.shape[1]
@@ -15,7 +15,6 @@ def inference(im,SLICE_SIZE=640):
     slice_size_w = int(width/dim_w)
 
     labels=[]
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path = 'weights/yolov5.pt').autoshape() ## put force_reload=True to redownload.
 
     for i in range(dim_h):
         for j in range(dim_w):
