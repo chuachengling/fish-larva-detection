@@ -21,7 +21,7 @@ def index():
 def main():
     response = request.get_json()
 
-    response = json.loads(response)
+    #response = json.loads(response)
 
     filename = response['filename']
     data_str = response['image_base64']
