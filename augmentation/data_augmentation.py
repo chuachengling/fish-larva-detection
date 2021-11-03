@@ -119,7 +119,7 @@ class yoloRotatebbox:
                 new_bbox.append([bbox[0], new_upper_left_corner[0], new_upper_left_corner[1],
                                  new_lower_right_corner[0], new_lower_right_corner[1]])
 
-        return new_bbox
+        print(self.rotate_image(), new_bbox)
 
     def rotate_image(self):
         """
