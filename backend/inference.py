@@ -58,7 +58,7 @@ def draw_bboxes(img,classes,colours,labels):
         class_idx = row['class']
         
 
-        plot_one_box([x1,y1,x2,y2], im2, color=colours[class_idx], label=classes[class_idx], line_thickness=None)
+        plot_one_box([x1,y1,x2,y2], im2, color=colours[class_idx], label=classes[class_idx], line_thickness=1)
 
     return im2
 

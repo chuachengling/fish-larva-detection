@@ -11,16 +11,17 @@ import shutil
 from PIL import Image
 import numpy as np
 import tempfile
-from io import BytesIO
+import io
 import torch
 import random
 import base64
 import requests
 import json
 
-def data_uri_to_cv2_img(uri):
-    io_obj= np.fromstring(base64.b64decode(uri), np.uint8)
-    return io_obj
+def data_uri_to_cv2_img(data_str):
+    image = base64.b64decode(data_str)
+    decoded = cv2.imdecode(np.frombuffer(image, np.uint8), flags=1)
+    return decoded
     
 st.markdown(
     """
@@ -88,6 +89,7 @@ if file:
     st.write('### Inferenced Image')
 
     img = data_uri_to_cv2_img(response['image_base64'])
+    print(img)
     st.image(img)
 
     ##code to display inferenced image here

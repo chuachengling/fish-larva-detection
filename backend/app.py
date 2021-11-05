@@ -35,13 +35,18 @@ def main():
     results = inference(img,model,640)
 
     img_with_bbox = draw_bboxes(img,config.CLASSES,config.COLORS,results)
+    
+    #cv2.imwrite('results.jpg',img_with_bbox)
 
     results_list = transform_results(results)
 
-    img_with_bbox = base64.b64encode(img_with_bbox).decode('utf8')
+    _, imagebytes = cv2.imencode('.jpg', img_with_bbox)
+    image_out = base64.b64encode(imagebytes)
+    
     response = {"filename":filename,
-                "image_base64":img_with_bbox,
+                "image_base64":image_out,
                 "predictions" : results_list}
+
 
     ## convert labels and image here 
 
