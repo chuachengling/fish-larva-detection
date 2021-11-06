@@ -112,7 +112,7 @@ if file:
 
     ## Summary statistics section in main app.
     st.write('### Summary Statistics')
-    st.write(f'Number of Bounding Boxes (ignoring overlap thresholds): {len(confidences)}')
+    st.write(f'Number of Bounding Boxes: {len(confidences)}')
     st.write(f'Average Confidence Level of Bounding Boxes: {(np.round(np.mean(confidences),4))}')
 
     ## Histogram in main app.
@@ -123,7 +123,7 @@ if file:
 
     # Download JSON
 
-    st.download_button(label='Download JSON', data=json.dumps(response),file_name = f'{filename}.json')
+    st.download_button(label='Download JSON File', data=json.dumps(response),file_name = f'{filename}.json')
 
 
 
