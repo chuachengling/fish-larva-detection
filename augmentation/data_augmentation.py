@@ -19,7 +19,7 @@ import argparse
 
 
 
-def mirror_all(imnames,newpath='augment_images/'):
+def mirror_all(imnames,newpath):
 
     for imname in imnames:
         im = cv2.imread(imname)
@@ -43,15 +43,14 @@ def mirror_all(imnames,newpath='augment_images/'):
         labels.to_csv(slice_labels_path, sep=' ', index=False, header=False, float_format='%.6f')
 
 def mirror_image(img,labels):
-    height = rotate_image.shape[0]
+    height = img.shape[0]
     width = img.shape[1]
-
-    labels['x1'] = labels['x1'].apply(lambda x:1 - x)
-    output = cv2.flip(img,1)
-
-    class_counts = labels['class'].value_counts()
-
-    return labels, output, class_counts
+    
+    labelsout = labels.copy()
+    labelsout['x1'] = labelsout['x1'].apply(lambda x:1 - x)
+    imgout = cv2.flip(img,1)
+    
+    return labelsout, imgout 
 
 
 
@@ -116,10 +115,11 @@ class yoloRotatebbox:
                         new_upper_left_corner.append(y_prime)
                 #             print(x_prime, y_prime)
 
-                new_bbox.append([bbox[0], new_upper_left_corner[0], new_upper_left_corner[1],
-                                 new_lower_right_corner[0], new_lower_right_corner[1]])
+                corner = [bbox[0], new_upper_left_corner[0], new_upper_left_corner[1],
+                                 new_lower_right_corner[0], new_lower_right_corner[1]]
+                new_bbox.append(cvFormattoYolo(corner, new_height, new_width))
 
-        return new_bbox
+        return pd.DataFrame(new_bbox, columns = ['class', 'x1', 'y1', 'w', 'h']
 
     def rotate_image(self):
         """
