@@ -89,7 +89,6 @@ if file:
     st.write('### Inferenced Image')
 
     img = data_uri_to_cv2_img(response['image_base64'])
-    print(img)
     st.image(img)
 
     ##code to display inferenced image here
