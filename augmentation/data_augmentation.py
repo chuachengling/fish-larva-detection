@@ -43,15 +43,16 @@ def mirror_all(imnames,newpath='augment_images/'):
         labels.to_csv(slice_labels_path, sep=' ', index=False, header=False, float_format='%.6f')
 
 def mirror_image(img,labels):
-    height = rotate_image.shape[0]
-    width = img.shape[1]
+    #height = rotate_image.shape[0]
+    #width = img.shape[1]
+    labelsout = labels.copy()
 
-    labels['x1'] = labels['x1'].apply(lambda x:1 - x)
+    labelsout['x1'] = labelsout['x1'].apply(lambda x:1 - x)
     output = cv2.flip(img,1)
 
-    class_counts = labels['class'].value_counts()
+    #class_counts = labels['class'].value_counts()
 
-    return labels, output, class_counts
+    return labelsout, output
 
 
 
