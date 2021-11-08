@@ -2,18 +2,11 @@ import streamlit as st
 from utils import *
 from collections import Counter
 import matplotlib.pyplot as plt
-import glob
 import cv2
 import pandas as pd
-import subprocess
-import os
-import shutil
-from PIL import Image
+
 import numpy as np
-import tempfile
-import io
 import torch
-import random
 import base64
 import requests
 import json
