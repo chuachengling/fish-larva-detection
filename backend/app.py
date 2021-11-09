@@ -50,7 +50,7 @@ def main():
 
     ## convert labels and image here 
 
-    return jsonify(**response)
+    return jsonify(response)
 
 
 if __name__ == '__main__':
