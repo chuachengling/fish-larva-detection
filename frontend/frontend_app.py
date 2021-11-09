@@ -97,18 +97,10 @@ if file:
     count_model = Counter(list_new)
     df1 = pd.DataFrame.from_dict(count_model, orient='index').reset_index()
     df1 = df1.rename(columns={"index": "class", 0: "model_count"})
-
-<<<<<<< HEAD
     color_mapping = {'fertilized egg': '#ff0000', 'unfertilized egg': '#00ff00', 'fish larva': '#ff33ff',
                      'unidentifiable object': '#3399ff'}
     df = df1.style.applymap(lambda v: f"background-color: {color_mapping.get(v, 'lightblue')}").applymap(
         lambda _: "color: white")
-=======
-    d = {"class": ["fertilized egg", "unfertilized egg", "fish larva", "unidentifiable object"], "colour": ["red", "purple", "green", "blue"]}
-
-    df2 = pd.DataFrame(data=d)
-    df = df1.concat(df2,on="class")
->>>>>>> 0bf777ce51c7e2a320a8f16546e983e13fb5f714
     st.dataframe(df)
 
     ## Generate list of confidences.
