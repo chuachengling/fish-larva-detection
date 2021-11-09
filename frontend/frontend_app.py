@@ -72,8 +72,8 @@ def rename_class(row):
       return 'unidentifiable object'
 
 if file:
-    response = predict('http://13.250.116.255:80/api/',file)
-    #response = predict('http://0.0.0.0:80/api/',file)
+    #response = predict('http://13.250.116.255:80/api/',file)
+    response = predict('http://0.0.0.0:80/api/',file)
     print('JSON file has been received')
 
     response = json.loads(response.text)

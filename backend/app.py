@@ -41,8 +41,8 @@ def main():
     results_list = transform_results(results)
 
     _, imagebytes = cv2.imencode('.jpg', img_with_bbox)
-    image_out = base64.b64encode(imagebytes)
-    
+    image_out = base64.b64encode(imagebytes).decode('UTF-8')
+
     response = {"filename":filename,
                 "image_base64":image_out,
                 "predictions" : results_list}
