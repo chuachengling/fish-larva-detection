@@ -30,7 +30,7 @@ def main():
     jpg_as_np = np.frombuffer(image, dtype=np.uint8)
     img = cv2.imdecode(jpg_as_np, flags=1)
 
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path = '../weights/yolov5.pt',force_reload=True).autoshape() ## put force_reload=True to redownload.
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path = 'weights/yolov5.pt',force_reload=True).autoshape() ## put force_reload=True to redownload.
 
     results = inference(img,model,640)
 
