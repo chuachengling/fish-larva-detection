@@ -95,8 +95,13 @@ if file:
         list_new.append(i["class_name"])
 
     count_model = Counter(list_new)
-    df = pd.DataFrame.from_dict(count_model, orient='index').reset_index()
-    df = df.rename(columns={"index": "class", 0: "model_count"})
+    df1 = pd.DataFrame.from_dict(count_model, orient='index').reset_index()
+    df1 = df.rename(columns={"index": "class", 0: "model_count"})
+
+    d = {"class": ["fertilized egg", "unfertilized egg", "fish larva", "unidentifiable object"], "colour": ["red", "purple", "green", "blue"]}
+
+    df2 = pd.DataFrame(data=d)
+    df = df1.merge(df2,on="class")
     st.dataframe(df)
 
     ## Generate list of confidences.
