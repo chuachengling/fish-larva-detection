@@ -101,7 +101,7 @@ if file:
     d = {"class": ["fertilized egg", "unfertilized egg", "fish larva", "unidentifiable object"], "colour": ["red", "purple", "green", "blue"]}
 
     df2 = pd.DataFrame(data=d)
-    df = df1.merge(df2,on="class")
+    df = df1.concat(df2,on="class")
     st.dataframe(df)
 
     ## Generate list of confidences.
