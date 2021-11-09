@@ -100,7 +100,7 @@ if file:
     
     color_mapping = {'fertilized egg': '#ff0000', 'unfertilized egg': '#00ff00', 'fish larva': '#ff33ff',
                      'unidentifiable object': '#3399ff'}
-    df = df1.style.applymap(lambda v: f"background-color: {color_mapping.get(v, 'lightblue')}").applymap(
+    df = df1.style.applymap(lambda v: f"background-color: {color_mapping.get(v, 'None')}").applymap(
         lambda _: "color: white")
     st.dataframe(df)
 
