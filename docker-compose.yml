@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  backend:
+    image: fish-larva-detection-api:latest
+    ports:
+      - 80:80
+  frontend:
+    image: streamlitapp:latest
+    ports:
+      - 8501:8501
+    links:
+      - backend
