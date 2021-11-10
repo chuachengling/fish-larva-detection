@@ -97,7 +97,7 @@ if file:
     count_model = Counter(list_new)
     df1 = pd.DataFrame.from_dict(count_model, orient='index').reset_index()
     df1 = df1.rename(columns={"index": "class", 0: "model_count"})
-    
+
     color_mapping = {'fertilized egg': '#ff0000', 'unfertilized egg': '#00ff00', 'fish larva': '#ff33ff',
                      'unidentifiable object': '#3399ff'}
     df = df1.style.applymap(lambda v: f"background-color: {color_mapping.get(v, 'None')}").applymap(
