@@ -1,7 +1,7 @@
 Fish Larva Detection
 ==============
 
-Authors: [ChengLing]Cheng Ling, Bhavesh, Leona, Siew Ning
+Authors: Cheng Ling, Bhavesh, Leona, Siew Ning
 --------------
 
 <details open>
